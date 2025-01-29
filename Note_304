@@ -1,0 +1,5 @@
+(Singly) Linked List
+    - Similar to arrays 
+    - Easier to insert and delete data
+Node Structure
+    - Access to first/head node, can access other items with this node

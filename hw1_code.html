@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>hw1_code</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="hw1_code_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw1_code_files/libs/quarto-html/quarto.js"></script>
+<script src="hw1_code_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw1_code_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw1_code_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw1_code_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw1_code_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw1_code_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw1_code_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw1_code_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+
+
+
+<p><strong>1)</strong></p>
+<div id="3687979c" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="bf454eec" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun1(n):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="bu">sum</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">1000000</span>, <span class="dv">2000000</span>, <span class="dv">3000000</span>, <span class="dv">4000000</span>, <span class="dv">5000000</span>, <span class="dv">6000000</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun1, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun1 as a function of n'</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (sum = 0) = <span class="math inline">\(1\)</span></p>
+<p>Assignment (sum in for loop) = <span class="math inline">\(n\)</span></p>
+<p>Accessing Individual Element of for loop = <span class="math inline">\(n\)</span></p>
+<p>Arithmetic Operations in for loop = <span class="math inline">\(n\)</span></p>
+<p>Total Operations = <span class="math inline">\(n + n + (n+1) = 3n + 1\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n\)</span> (Linear).</p>
+<div id="f70a76c7" class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun2(n):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">1000</span>, <span class="dv">2000</span>, <span class="dv">3000</span>, <span class="dv">4000</span>, <span class="dv">5000</span>, <span class="dv">6000</span>, <span class="dv">7000</span>, <span class="dv">8000</span>]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun2, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun2 as a function of n'</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment = <span class="math inline">\(n^2+1\)</span></p>
+<p>Accessing Individual Element = <span class="math inline">\(n^2\)</span></p>
+<p>Arithmetic Operations = <span class="math inline">\(n^2\)</span></p>
+<p>Total Operations = <span class="math inline">\(n^2 + n^2 + (n^2+1) = 3n^2 + 1\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^2\)</span> (Quadratic).</p>
+<div id="282fcdb0" class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun3(n):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span> <span class="co"># 1 operation for assignment</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n): </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i):</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">1000</span>, <span class="dv">2000</span>, <span class="dv">3000</span>, <span class="dv">4000</span>, <span class="dv">5000</span>, <span class="dv">6000</span>, <span class="dv">7000</span>, <span class="dv">8000</span>]</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun3, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun3 as a function of n'</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (sum = 0) = <span class="math inline">\(1\)</span></p>
+<p>Assignment in for loop = <span class="math inline">\((0 + 1 + 2 + 3 + ... + (n-1)) = \frac{n(n-1)}{2}\)</span></p>
+<p>Accessing Individual Element in for loop (i, j) = <span class="math inline">\(0 + 1 + 2 + 3 + ... + (n-1) = \frac{n(n-1)}{2}\)</span></p>
+<p>Arithmetic Operations in for loop = <span class="math inline">\(0 + 1 + 2 + 3 + ... + (n-1) = \frac{n(n-1)}{2}\)</span></p>
+<p>Total Operations = <span class="math inline">\(1 + \frac{n(n-1)}{2} + \frac{n(n-1)}{2} + \frac{n(n-1)}{2} = \frac{3n^2 - 3n + 3}{2}\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^2\)</span> (Quadratic).</p>
+<div id="8d28db68" class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun4(n):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">*</span>n):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">600</span>]</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun4, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun4 as a function of n'</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (sum = 0) = <span class="math inline">\(1\)</span></p>
+<p>Assignment in for loop = <span class="math inline">\(n(n^2) = n^3\)</span></p>
+<p>Accessing Individual Element in for loop (i, j) = <span class="math inline">\(n(n^2) = n^3\)</span></p>
+<p>Arithmetic Operations in for loop = <span class="math inline">\(n(n^2) = n^3\)</span></p>
+<p>Total Operations = <span class="math inline">\(n^3 + n^3 + (n^3+1) = 3n^3 + 1\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^3\)</span> (Cubic).</p>
+<div id="bf6c19fb" class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun5(n):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i):</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">8000</span>):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span> <span class="op">+=</span> <span class="dv">1</span>   </span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span> </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">10000</span>, <span class="dv">20000</span>, <span class="dv">30000</span>, <span class="dv">40000</span>, <span class="dv">50000</span>, <span class="dv">60000</span>]</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun5, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun5 as a function of n'</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment = <span class="math inline">\(1 + (0 + 1 + 2 + 3 + ... + (n-1)) + 8000n =  1 + \frac{n(n-1)}{2} + 8000n\)</span></p>
+<p>Accessing Individual Element = <span class="math inline">\(0 + 1 + 2 + 3 + ... + (n-1) + 8000n = \frac{n(n-1)}{2}\)</span></p>
+<p>Arithmetic Operations = <span class="math inline">\(0 + 1 + 2 + 3 + ... + (n-1) + 8000n = \frac{n(n-1)}{2} + 8000n\)</span></p>
+<p>Total Operations = <span class="math inline">\(1 + \frac{n(n-1)}{2} + \frac{n(n-1)}{2} + \frac{n(n-1)}{2} + 8000n + 8000n + 8000n  = \frac{3n^2 - 3n + 3}{2} + 24000n\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^2\)</span> (Quadratic).</p>
+<p>Please skip counting the frenqucy of primitive operation for fun6</p>
+<div id="590a5691" class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun6(n):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n<span class="op">//</span><span class="dv">2</span>,n<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>,n<span class="op">//</span><span class="dv">2</span><span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span> (<span class="dv">1</span>, n<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                k <span class="op">*=</span> <span class="dv">2</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> count</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">600</span>]</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun6, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun6 as a function of n'</span>)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We knows that i, j, and k is composed of a linear function of <span class="math inline">\(n\)</span>.</p>
+<p>Then, the <span class="math inline">\(Big-O\)</span> should be <span class="math inline">\(n*n*n = n^3\)</span></p>
+<div id="278bfffb" class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fun7(n):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">sum</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(i<span class="op">*</span>i):</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="bu">sum</span><span class="op">+=</span><span class="dv">1</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">600</span>]</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(fun7, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list, y_list)</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of fun7 as a function of n'</span>)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'n'</span>)</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment = <span class="math inline">\(1 + (0 + 1^2 + 2^2 + 3^2 + ... + (n-1)^2)  =  1 + \frac{(n-1)(n)(2n-1)}{6}\)</span></p>
+<p>Accessing Individual Element (in j loop) = <span class="math inline">\((0 + 1^2 + 2^2 + 3^2 + ... + (n-1)^2) = \frac{(n-1)(n)(2n-1)}{6}\)</span></p>
+<p>Arithmetic Operations = <span class="math inline">\((0 + 1^2 + 2^2 + 3^2 + ... + (n-1)^2) =  \frac{(n-1)(n)(2n-1)}{6}\)</span></p>
+<p>Total Operations = <span class="math inline">\(\frac{(n-1)(n)(2n-1)}{6} + \frac{(n-1)(n)(2n-1)}{6} + \frac{(n-1)(n)(2n-1)}{6} + 1 = \frac{(n-1)(n)(2n-1)}{2} + 1\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^3\)</span> (Cubic).</p>
+<div id="3ef95450" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the sum of the elements in sequence S</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example1(S):</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(S)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>        total <span class="op">+=</span> S[j]</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>)],</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2000</span>)],</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3000</span>)],</span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4000</span>)],</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>)],</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6000</span>)]]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>x_list_size <span class="op">=</span> []</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x_list)):</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>    x_list_size.append(<span class="bu">len</span>(x_list[i]))</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(example1, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list_size, y_list)</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of example1 as a function of n'</span>)</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'size of sequence'</span>)</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (n = len(S), total = 0) = <span class="math inline">\(2\)</span></p>
+<p>Assignment (total in for loop) = <span class="math inline">\(n\)</span></p>
+<p>Accessing Individual Element (j in for loop) = <span class="math inline">\(n\)</span></p>
+<p>Arithmetic Operations <span class="math inline">\((+= S[j])\)</span> = <span class="math inline">\(n\)</span></p>
+<p>Total Operations = <span class="math inline">\(n + n + n + 1 + 1\)</span> = <span class="math inline">\(3n + 2\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n\)</span> (Linear).</p>
+<div id="5e73225a" class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the sum of the elements with even index in sequence S</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example2(S):</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(S)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">0</span>, n, <span class="dv">2</span>):</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>        total <span class="op">+=</span> S[j]</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1000</span>)],</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2000</span>)],</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3000</span>)],</span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4000</span>)],</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">5000</span>)],</span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">6000</span>)]]</span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>x_list_size <span class="op">=</span> []</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x_list)):</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>    x_list_size.append(<span class="bu">len</span>(x_list[i]))</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(example2, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list_size, y_list)</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of example2 as a function of n'</span>)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'size of sequence'</span>)</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (n = len(S), total = 0) = <span class="math inline">\(2\)</span></p>
+<p>Assignment (total in for loop) = <span class="math inline">\((n+1)//2\)</span></p>
+<p>Accessing Individual Element (j in for loop) = <span class="math inline">\((n+1)//2\)</span></p>
+<p>Arithmetic Operations <span class="math inline">\((+= S[j])\)</span> = <span class="math inline">\((n+1)//2\)</span></p>
+<p>Total Operations = <span class="math inline">\((n+1)//2 + (n+1)//2 + (n+1)//2 + 1 + 1\)</span> = <span class="math inline">\(3((n+1)//2) + 2 \leq 3(n+1)/2\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n\)</span> (Linear).</p>
+<div id="39ce4a1d" class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the sum of the prefix sums of sequence S</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example3(S):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(S)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span><span class="op">+</span>j):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>            total <span class="op">+=</span> S[k]</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>)],</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>)],</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">300</span>)],</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">400</span>)],</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>)],</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">600</span>)]]</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>x_list_size <span class="op">=</span> []</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x_list)):</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>    x_list_size.append(<span class="bu">len</span>(x_list[i]))</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(example3, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list_size, y_list)</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of example3 as a function of n'</span>)</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'size of sequence'</span>)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (n = len(S), total = 0) = <span class="math inline">\(2\)</span></p>
+<p>Assignment (total in for loop) = <span class="math inline">\(1 + 2 + 3 + ... + n = \frac{n(n+1)}{2}\)</span></p>
+<p>Accessing Individual Element (j, k in for loop) = <span class="math inline">\(1 + 2 + 3 + 4 + ... + n = \frac{n(n+1)}{2}\)</span></p>
+<p>Arithmetic Operations <span class="math inline">\((+= S[k])\)</span> = <span class="math inline">\(1 + 2 + 3 + 4 + ... + n = \frac{n(n+1)}{2}\)</span></p>
+<p>Total Operations = <span class="math inline">\(\frac{n(n+1)}{2} + \frac{n(n+1)}{2} + \frac{n(n+1)}{2} + 2\)</span> = $ + 2$</p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^2\)</span> (Quadratic).</p>
+<div id="2b68a289" class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the sum of the prefix sums of sequence S.</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example4(S):</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(S)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    prefix <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>        prefix <span class="op">+=</span> S[j]</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>        total <span class="op">+=</span> prefix</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, n):</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(n)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>x_list <span class="op">=</span> [[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>)],</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">200</span>)],</span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">300</span>)],</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">400</span>)],</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">500</span>)],</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>          [i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">600</span>)]]</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>x_list_size <span class="op">=</span> []</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(x_list)):</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>    x_list_size.append(<span class="bu">len</span>(x_list[i]))</span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(example4, n) <span class="cf">for</span> n <span class="kw">in</span> x_list]</span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize <span class="op">=</span> (<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list_size, y_list)</span>
+<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'runtime of example4 as a function of n'</span>)</span>
+<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'size of sequence'</span>)</span>
+<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'runtime'</span>)</span>
+<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (n = len(S), total = 0, prefix = 0) = <span class="math inline">\(3\)</span></p>
+<p>Assignment (prefix, total in for loop) = <span class="math inline">\(n + n = 2n\)</span></p>
+<p>Accessing Individual Element (j in for loop) = <span class="math inline">\(n\)</span></p>
+<p>Arithmetic Operations <span class="math inline">\((+= S[j], += prefix)\)</span> = <span class="math inline">\(n + n = 2n\)</span></p>
+<p>Total Operations = <span class="math inline">\(2n + 2n + n + 3\)</span> = <span class="math inline">\(5n + 3\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n\)</span> (Linear).</p>
+<div id="acbd8d17" class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Return the number of elements in B equal to the sum of prefix sums in A</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> example5(A, B):  <span class="co"># assume that A and B have equal length</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(A)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    count <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        total <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(n):</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span><span class="op">+</span>j):</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>                total <span class="op">+=</span> A[k]</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> B[i] <span class="op">==</span> total:</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>                count <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> count</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> runtime(f, m, n):</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the start of cell, define &lt;tic&gt; variable</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    tic <span class="op">=</span> time.time()</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Runs the function (Execute)</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> f(m, n)</span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">#at the end of cell, define &lt;toc&gt; variable</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>    toc <span class="op">=</span> time.time()</span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>    <span class="co">#store execution time in variable. Note the unit of the result is seconds</span></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    time_taken <span class="op">=</span> toc <span class="op">-</span> tic </span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> time_taken</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create list of x and y</span></span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Create input data</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>x_1_list <span class="op">=</span> [[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)] <span class="cf">for</span> n <span class="kw">in</span> [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">600</span>]]</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>x_2_list <span class="op">=</span> [[i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(n)] <span class="cf">for</span> n <span class="kw">in</span> [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>, <span class="dv">600</span>]]</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a><span class="co"># Store input sizes</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>x_list_size <span class="op">=</span> [<span class="bu">len</span>(x) <span class="cf">for</span> x <span class="kw">in</span> x_1_list]</span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-33"><a href="#cb13-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate runtimes for each pair of inputs</span></span>
+<span id="cb13-34"><a href="#cb13-34" aria-hidden="true" tabindex="-1"></a>y_list <span class="op">=</span> [runtime(example5, m, n) <span class="cf">for</span> m, n <span class="kw">in</span> <span class="bu">zip</span>(x_1_list, x_2_list)]</span>
+<span id="cb13-35"><a href="#cb13-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-36"><a href="#cb13-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the graph</span></span>
+<span id="cb13-37"><a href="#cb13-37" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb13-38"><a href="#cb13-38" aria-hidden="true" tabindex="-1"></a>plt.plot(x_list_size, y_list, marker<span class="op">=</span><span class="st">'o'</span>)</span>
+<span id="cb13-39"><a href="#cb13-39" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Runtime of example5 as a function of n'</span>)</span>
+<span id="cb13-40"><a href="#cb13-40" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Size of Sequence'</span>)</span>
+<span id="cb13-41"><a href="#cb13-41" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Runtime (seconds)'</span>)</span>
+<span id="cb13-42"><a href="#cb13-42" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, which<span class="op">=</span><span class="st">"both"</span>, linestyle<span class="op">=</span><span class="st">"--"</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb13-43"><a href="#cb13-43" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>Primitive Operations for function:</strong></p>
+<p>Assignment (n = len(A), count = 0) = <span class="math inline">\(2\)</span></p>
+<p>Assignment (total = 0 in first for loop) = <span class="math inline">\(n\)</span></p>
+<p>[Loop i is repeated for n times]</p>
+<p>In the loop i,</p>
+<p>Assignment (total in for loop j, k) = <span class="math inline">\(1 + 2 + 3 + 4 + ... + n = \frac{n(n+1)}{2}\)</span></p>
+<p>Accessing Individual Element (j, k in for loop) = <span class="math inline">\(1 + 2 + 3 + ... + n = \frac{n(n+1)}{2}\)</span></p>
+<p>Arithmetic Operations <span class="math inline">\((+= A[k])\)</span> = <span class="math inline">\(1 + 2 + 3 + 4 + ... + n = \frac{n(n+1)}{2}\)</span></p>
+<p>Arithmetic operation (Comparison (==), Add(+=) in if statement) = <span class="math inline">\(n + n\)</span> = <span class="math inline">\(2n\)</span></p>
+<p>Total Operations in the loop i = $n( + + + 2n) = $</p>
+<p>Total operations = <span class="math inline">\(\frac{3n^2(n+1)}{2} + n + 2\)</span></p>
+<p>Total Operation is said to be asymptotically equivalent to <span class="math inline">\(n^3\)</span> (Cubic).</p>
+<p><strong>2)</strong> For each function <span class="math inline">\(f(n)\)</span> and time t in the following table, determine the largest size <span class="math inline">\(n\)</span> of problem <span class="math inline">\(P\)</span> that can be solved in time <span class="math inline">\(t\)</span> if the algorithm for solving <span class="math inline">\(P\)</span> takes <span class="math inline">\(f(n)\)</span> microseconds.</p>
+<p><strong>Solution:</strong></p>
+<table class="table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 12%">
+<col style="width: 24%">
+<col style="width: 31%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">f(n)</th>
+<th style="text-align: left;">1 second</th>
+<th style="text-align: center;">1 Hour</th>
+<th style="text-align: center;">1 Month</th>
+<th style="text-align: left;">1 Century</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\log n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(2^{10^6} = 10^{300000}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(10^{1.08 * 10^9}\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(10^{7.78 * 10^{11}}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(10^{9.46 * 10^{14}}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(10^6 = 1000000\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3.6 * 10^9\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(2.592 * 10^{12}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(3.1536 * 10^{15}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(n\log n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(6.27 * 10^4\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.33 * 10^8\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(7.19 * 10^{10}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(6.86 * 10^{13}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(n^2\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(10^3 = 1000\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(6 * 10^4 = 60000\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(1.61 * 10^6\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(5.62 * 10^7\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(2^n\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(19.93\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(31.75\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(41.24\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(51.49\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Firstly, change all time in n to microseconds.</p>
+<p>1 second = <span class="math inline">\(10^6\)</span> milliseconds</p>
+<p>1 Hour = <span class="math inline">\(60 * 60 * 10^6 = 3.6 * 10^9\)</span> milliseconds</p>
+<p>1 Month = <span class="math inline">\(30 * 24 * 3.6 * 10^9 = 2.592 * 10^{12}\)</span> milliseconds</p>
+<p>1 century = <span class="math inline">\(100 * 365 * 24* 3.6 * 10^9 = 3.1536 * 10^{15}\)</span> milliseconds</p>
+<p>For <span class="math inline">\(f(n) = \log(n)\)</span>,</p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> second, <span class="math inline">\(\log n = 10^6\)</span> and then <span class="math inline">\(n = 2^{10^6}\)</span> ~ <span class="math inline">\(10^300000\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> hour, <span class="math inline">\(\log n = 3.6 * 10^9\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(10^{1.08 * 10^9}\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> month, <span class="math inline">\(\log n = 2.592 * 10^{12}\)</span> and then <span class="math inline">\(n = 2^{2.592^{10^{12}}}\)</span> = <span class="math inline">\(2^{10/3 * 7.78 * 10^{11}}\)</span> ~ <span class="math inline">\(10^{7.78 * 10^{11}}\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> century, <span class="math inline">\(\log n = 3.1536 * 10^{15}\)</span> and then <span class="math inline">\(n = 2^{3.1536^{10^{15}}}\)</span> = <span class="math inline">\(2^{10/3 * 9.46 * 10^{14}}\)</span> ~ <span class="math inline">\(10^{9.46 * 10^{14}}\)</span></p>
+<p>For <span class="math inline">\(f(n) = n\)</span>,</p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> second, <span class="math inline">\(n = 10^6\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> hour, <span class="math inline">\(n = 3.6 * 10^9\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> month, <span class="math inline">\(n = 2.592 * 10^{12}\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> century, <span class="math inline">\(n = 3.1536 * 10^{15}\)</span></p>
+<p>For <span class="math inline">\(f(n) = n \log(n)\)</span>,</p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> second, <span class="math inline">\(n \log n = 10^6\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(6.27 * 10^4\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> hour, <span class="math inline">\(n \log n = 3.6 * 10^9\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(1.33 * 10^8\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> month, <span class="math inline">\(n \log n = 2.592 * 10^{12}\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(7.19 * 10^{10}\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> century, <span class="math inline">\(n \log n = 3.1536 * 10^{15}\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(6.86 * 10^{13}\)</span></p>
+<p>For <span class="math inline">\(f(n) = n^2\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> second, <span class="math inline">\(n^2 = 10^6\)</span> and then <span class="math inline">\(n\)</span> = <span class="math inline">\(10^3 = 1000\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> hour, <span class="math inline">\(n^2 = 3.6 * 10^9\)</span> and then <span class="math inline">\(n\)</span> = <span class="math inline">\(6 * 10^4 = 60000\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> month, <span class="math inline">\(n^2 = 2.592 * 10^{12}\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(1.61 * 10^6\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> century, <span class="math inline">\(n^2 = 3.1536 * 10^{15}\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(5.62 * 10^7\)</span></p>
+<p>For <span class="math inline">\(f(n) = 2^n\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> second, <span class="math inline">\(2^n = 10^6\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(19.93\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> hour, <span class="math inline">\(2^n = 3.6 * 10^9\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(31.75\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> month, <span class="math inline">\(2^n = 2.592 * 10^{12}\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(41.24\)</span></p>
+<p>If <span class="math inline">\(f(n)\)</span> = <span class="math inline">\(1\)</span> century, <span class="math inline">\(2^n = 3.1536 * 10^{15}\)</span> and then <span class="math inline">\(n\)</span> ~ <span class="math inline">\(51.49\)</span></p>
+<p><strong>3)</strong></p>
+<ol type="a">
+<li><p>Show that <span class="math inline">\((n + 1)^5\)</span> is <span class="math inline">\(O(n^5)\)</span>.</p></li>
+<li><p>Show that <span class="math inline">\(2^{n+1}\)</span> is <span class="math inline">\(O(2^n)\)</span>.</p></li>
+<li><p>Show that <span class="math inline">\(n\)</span> is <span class="math inline">\(O(n \log n)\)</span>.</p></li>
+</ol>
+<p><strong>Solution:</strong></p>
+<ol type="a">
+<li>Since <span class="math inline">\(\lim_{n \to \infty} \frac{(n+1)^5}{n^5}\)</span> = <span class="math inline">\(\lim_{n \to \infty} (\frac{n+1}{n})^5\)</span> = <span class="math inline">\(\lim_{n \to \infty} (1 + \frac{1}{n})^5\)</span> = <span class="math inline">\(1\)</span>.</li>
+</ol>
+<p>Because <span class="math inline">\(lim_{n \to \infty}\frac{f(n)}{g(n)}\)</span> is constant, (n+1)^5 grows at the same rate as n^5.</p>
+<p>Therefore, <span class="math inline">\(n^5\)</span> is the theta of <span class="math inline">\((n+1)^5\)</span> and then also the Big-O of <span class="math inline">\((n+1)^5\)</span>.</p>
+<ol start="2" type="a">
+<li>Since <span class="math inline">\(\lim_{n \to \infty} \frac{2^{n+1}}{2^n}\)</span> = <span class="math inline">\(\lim_{n \to \infty} 2\)</span> = <span class="math inline">\(2\)</span></li>
+</ol>
+<p>Because <span class="math inline">\(lim_{n \to \infty}\frac{f(n)}{g(n)}\)</span> is constant, 2^{n+1} grows at the same rate as <span class="math inline">\(2^n\)</span>.</p>
+<p>Therefore, <span class="math inline">\(2^n\)</span> is the theta of <span class="math inline">\(2^{n+1}\)</span> and then also the Big-O of <span class="math inline">\(2^{n+1}\)</span>.</p>
+<ol start="3" type="a">
+<li>Since <span class="math inline">\(\lim_{n \to \infty} \frac{n}{n \log n}\)</span> = <span class="math inline">\(\lim_{n \to \infty} \frac{1}{\log n}\)</span> = <span class="math inline">\(0\)</span></li>
+</ol>
+<p>Because <span class="math inline">\(lim_{n \to \infty}\frac{f(n)}{g(n)}\)</span> is 0, <span class="math inline">\(n \log n\)</span> grows faster than <span class="math inline">\(n\)</span>.</p>
+<p>Therefore, <span class="math inline">\(n \log n\)</span> is the Big-O of <span class="math inline">\(n\)</span>.</p>
+<p><strong>4)</strong></p>
+<ol type="a">
+<li><p>The number of operations executed by algorithms A and B is <span class="math inline">\(8n \log n\)</span> and <span class="math inline">\(2n^2\)</span>, respectively. Determine <span class="math inline">\(n_0\)</span> such that A is better than B for <span class="math inline">\(n \geq n_0\)</span></p></li>
+<li><p>The number of operations executed by algorithms A and B is <span class="math inline">\(40n^2\)</span> and <span class="math inline">\(2n^3\)</span>, respectively. Determine <span class="math inline">\(n_0\)</span> such that A is better than B for <span class="math inline">\(n \geq n_0\)</span></p></li>
+</ol>
+<p><strong>Solution:</strong></p>
+<ol type="a">
+<li>A is better than B if number of operations executed by A is less than that of B.</li>
+</ol>
+<p>Then <span class="math inline">\(8n \log n\)</span> <span class="math inline">\(&lt;\)</span> <span class="math inline">\(2n^2\)</span>.</p>
+<p>Divide <span class="math inline">\(2n\)</span> from both sides; <span class="math inline">\(4 \log n\)</span> <span class="math inline">\(&lt;\)</span> <span class="math inline">\(n\)</span>.</p>
+<p>Then we have <span class="math inline">\(2^{4 \log n}\)</span> <span class="math inline">\(&lt;\)</span> <span class="math inline">\(2^n\)</span>.</p>
+<p>By the logarithm property, <span class="math inline">\(2^{4 \log n}\)</span> = <span class="math inline">\(n^4\)</span>.</p>
+<p>Now <span class="math inline">\(n^4\)</span> <span class="math inline">\(&lt;\)</span> <span class="math inline">\(2^n\)</span> is the condition we need to satisfy, which can be satisfied for all <span class="math inline">\(n \geq 17\)</span>.</p>
+<p>Therefore, <span class="math inline">\(n_0 = 17\)</span>.</p>
+<ol start="2" type="a">
+<li>A is better than B if number of operations executed by A is less than that of B.</li>
+</ol>
+<p>Then <span class="math inline">\(40n^2 &lt; 2n^3\)</span>.</p>
+<p>Divide <span class="math inline">\(n^2\)</span> from both sides; <span class="math inline">\(40 &lt; 2n\)</span>.</p>
+<p>So we have <span class="math inline">\(20 &lt; n\)</span> which can be satisfied by all <span class="math inline">\(n \geq 21\)</span>.</p>
+<p>Therefore, <span class="math inline">\(n_0 = 21\)</span>.</p>
+<p><strong>5)</strong> Order the following 14 functions by growth rate.</p>
+<p><span class="math inline">\(n, \sqrt n, n^{1.5}, n^2, n\log n, n \log \log n, n \log^2 n, n \log (n^2), 2/n, 2^n, 2^{n/2}, 37, n^2 \log n, n^3\)</span></p>
+<p><strong>Solution:</strong></p>
+<p>We will classify the order of growth of each function first.</p>
+<p><span class="math inline">\(n\)</span> is linear.</p>
+<p><span class="math inline">\(\sqrt n\)</span> has lower growth rate compared to <span class="math inline">\(n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{\sqrt n}{n} = \lim_{n \to \infty}\frac{1}{\sqrt n} = 0\)</span>.</p>
+<p><span class="math inline">\(n^{1.5}\)</span> has higher growth rate compared to <span class="math inline">\(n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n^{1.5}}{n} = \lim_{n \to \infty}\sqrt n\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p><span class="math inline">\(n^2\)</span> has higher growth rate compared to <span class="math inline">\(n^{1.5}\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n^{2}}{n^{1.5}} = \lim_{n \to \infty}\sqrt n\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p>So now we have <span class="math inline">\(\sqrt n, n, n^{1.5}, n^2\)</span> in increasing order of growth.</p>
+<p><span class="math inline">\(n\log n\)</span> has higher growth rate compared to <span class="math inline">\(n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n \log n}{n} = \lim_{n \to \infty}\log n\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p><span class="math inline">\(n\log n\)</span> has lower growth rate compared to <span class="math inline">\(n^{1.5}\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n \log n}{n^{1.5}} = \lim_{n \to \infty}\frac{\log n}{\sqrt n} = 0\)</span> since <span class="math inline">\(\sqrt n\)</span> grows much faster than <span class="math inline">\(\log n\)</span> when n is large(Imagine <span class="math inline">\(2^{\sqrt n}\)</span> which grows exponentially and <span class="math inline">\(2^{\log n} = n\)</span> which grows linearly).</p>
+<p><span class="math inline">\(n\log \log n\)</span> has higher growth rate compared to <span class="math inline">\(n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n \log \log n}{n} = \lim_{n \to \infty}\log \log n\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p><span class="math inline">\(n\log \log n\)</span> has lower growth rate compared to <span class="math inline">\(n \log n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n \log \log n}{n \log n} = \lim_{n \to \infty}\frac{\log \log n}{\log n} = 0\)</span> since <span class="math inline">\(\log n\)</span> grows faster than <span class="math inline">\(\log \log n\)</span> (Imagine <span class="math inline">\(2^{\log \log n} = \log n\)</span> which grows logarithmically and <span class="math inline">\(2^{\log n} = n\)</span> which grows linearly, Logarithmically is slower than linear).</p>
+<p>So now we have <span class="math inline">\(\sqrt n, n, n \log \log n, n \log n, n^{1.5}, n^2\)</span> in increasing order of growth.</p>
+<p><span class="math inline">\(n \log^2 n\)</span> has higher growth than <span class="math inline">\(n \log n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n \log^2 n}{n \log n} = \lim_{n \to \infty}\log n\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p><span class="math inline">\(n \log^2 n\)</span> has lower growth than <span class="math inline">\(n^{1.5}\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n \log^2 n}{n^{1.5}} = \lim_{n \to \infty}\frac{\log^2 n}{\sqrt n} = 0\)</span> (Imagine writen <span class="math inline">\(n = 2^k\)</span> for some real number <span class="math inline">\(k\)</span>, we have <span class="math inline">\(\log^2 n = k^2\)</span> which is quadratic while <span class="math inline">\(\sqrt n = n^{k/2}\)</span> which is exponential).</p>
+<p><span class="math inline">\(n \log (n^2) = 2n \log\)</span> has the same growth rate as <span class="math inline">\(n \log n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{2n \log n}{n \log n} =  \lim_{n \to \infty}2 = 2\)</span> which is a constant.</p>
+<p>So now we have <span class="math inline">\(\sqrt n, n, n \log \log n, n \log n, n \log n^2, n \log^2 n, n^{1.5}, n^2\)</span> in increasing order of growth.</p>
+<p><span class="math inline">\(37\)</span> is a constant, so it has lower growth than <span class="math inline">\(\sqrt n\)</span>.</p>
+<p><span class="math inline">\(2/n\)</span> is decreasing when n increases, so it has lower growth than <span class="math inline">\(37\)</span>.</p>
+<p>So now we have <span class="math inline">\(2/n, 37, \sqrt n, n, n \log \log n, n \log n, n \log n^2, n \log^2 n, n^{1.5}, n^2\)</span> in increasing order of growth.</p>
+<p><span class="math inline">\(n^2 \log n\)</span> has higher growth rate than <span class="math inline">\(n^2\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n^2 \log n}{n^2} = \lim_{n \to \infty}\log n\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p><span class="math inline">\(n^3\)</span> has higher growth rate than <span class="math inline">\(n^2 \log n\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{n^3}{n^2 \log n} = \lim_{n \to \infty}\frac{n}{\log n}\)</span> which goes to <span class="math inline">\(\infty\)</span> (<span class="math inline">\(n\)</span> grows faster than <span class="math inline">\(\log n\)</span>).</p>
+<p><span class="math inline">\(2^{n/2}\)</span> grows exponentially, so it grows faster than <span class="math inline">\(n^3\)</span>.</p>
+<p><span class="math inline">\(2^n\)</span> grows faster than <span class="math inline">\(2^{n/2}\)</span> since <span class="math inline">\(\lim_{n \to \infty}\frac{2^n}{2^{n/2}} = \lim_{n \to \infty}2^{n/2}\)</span> which goes to <span class="math inline">\(\infty\)</span>.</p>
+<p>Therefore, the order of function by increasing growth rate is <span class="math inline">\(2/n, 37, \sqrt n, n, n \log \log n, n \log n, n \log n^2, n \log^2 n, n^{1.5}, n^2, n^2 \log n, n^3, 2^{n/2}, 2^n\)</span>.</p>
+<p><strong>6)</strong></p>
+<p>Suppose <span class="math inline">\(T_1(n) = O(f(n))\)</span> and <span class="math inline">\(T_2(n) = O(f(n))\)</span>. Which of the following are always true (for all <span class="math inline">\(T_1 , T_2\)</span>, and <span class="math inline">\(f\)</span>)?</p>
+<ol type="a">
+<li><p><span class="math inline">\(T_1 (n) + T_2 (n) = O(f(n))\)</span></p></li>
+<li><p><span class="math inline">\(T_1 (n) − T_2 (n) = Θ(f(n))\)</span></p></li>
+<li><p><span class="math inline">\(\frac{T_1(n)}{T_2(n)} = O(1)\)</span></p></li>
+<li><p><span class="math inline">\(T_1 (n) = O(T_2 (n))\)</span></p></li>
+</ol>
+<p><strong>Solution:</strong></p>
+<ol type="a">
+<li><p>True</p></li>
+<li><p>False</p></li>
+</ol>
+<p>Think of <span class="math inline">\(f(n) = n\)</span>.</p>
+<p>Then <span class="math inline">\(T_1(n) = O(n)\)</span> and also <span class="math inline">\(T_2(n) = O(n)\)</span>.</p>
+<p>That means we can pick <span class="math inline">\(T_1(n) = T_2(n) = n\)</span></p>
+<p>Therefore we have <span class="math inline">\(T_1(n) - T_2(n)\)</span> = <span class="math inline">\(n - n\)</span> = <span class="math inline">\(0\)</span></p>
+<p>If <span class="math inline">\(T_1 (n) − T_2 (n) = Θ(n)\)</span>, there exists positive constant <span class="math inline">\(c_1, c_2, and n_0\)</span> such that</p>
+<p><span class="math inline">\(0 \leq c_1 * n \leq T_1 (n) − T_2 (n) \leq c_2 * n\)</span> for <span class="math inline">\(n \geq n_0\)</span></p>
+<p>Then we have <span class="math inline">\(0 \leq c_1 * n \leq 0 \leq c_2 * n\)</span> which is impossible.</p>
+<p>Therefore (b) is false.</p>
+<ol start="3" type="a">
+<li>False</li>
+</ol>
+<p>Think of <span class="math inline">\(f(n) = n^2\)</span>.</p>
+<p>Then <span class="math inline">\(T_1(n) = O(n^2)\)</span> and also <span class="math inline">\(T_2(n) = O(n^2)\)</span>.</p>
+<p>That means we can pick <span class="math inline">\(T_1(n) =  n^2\)</span> but <span class="math inline">\(T_2(n) = n\)</span></p>
+<p>Therefore <span class="math inline">\(\frac{T_1(n)}{T_2(n)} = n\)</span> which is not <span class="math inline">\(O(1)\)</span>.</p>
+<ol start="4" type="a">
+<li>False</li>
+</ol>
+<p>Think of <span class="math inline">\(f(n) = n^2\)</span>.</p>
+<p>Then <span class="math inline">\(T_1(n) = O(n^2)\)</span> and also <span class="math inline">\(T_2(n) = O(n^2)\)</span>.</p>
+<p>That means we can pick <span class="math inline">\(T_1(n) =  n^2\)</span> but <span class="math inline">\(T_2(n) = n\)</span></p>
+<p>Therefore <span class="math inline">\(T_1 (n) =  n^2 \neq O(n) = O(T_2 (n))\)</span></p>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
